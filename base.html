@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Bank Term Deposit Subscription Prediction System{% endblock %}</title>
+    <!-- Fonts and Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Local CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon"><i class="fa-solid fa-layer-group"></i></div>
+                <h2>Bank Subscription Predictor</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('index') }}" class="nav-item {% if request.endpoint == 'index' %}active{% endif %}"><i class="fa-solid fa-chart-line"></i> Predictor</a>
+                <a href="{{ url_for('datasets') }}" class="nav-item {% if request.endpoint == 'datasets' %}active{% endif %}"><i class="fa-solid fa-database"></i> Datasets</a>
+                <a href="{{ url_for('models') }}" class="nav-item {% if request.endpoint == 'models' %}active{% endif %}"><i class="fa-solid fa-network-wired"></i> Models</a>
+                <a href="{{ url_for('presentation_3d') }}" class="nav-item {% if request.endpoint == 'presentation_3d' %}active{% endif %}"><i class="fa-solid fa-cube"></i> 3D Presentation</a>
+                <a href="{{ url_for('settings') }}" class="nav-item {% if request.endpoint == 'settings' %}active{% endif %}"><i class="fa-solid fa-sliders"></i> Settings</a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="info-card">
+                    <h4><i class="fa-solid fa-circle-info"></i> Project Info</h4>
+                    <ul>
+                        <li><span>Algorithm:</span> Random Forest</li>
+                        <li><span>Records:</span> 45,211</li>
+                        <li><span>Features:</span> 8</li>
+                        <li><span>Accuracy:</span> 87.76%</li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-titles">
+                    <h1>{% block page_header %}Bank Term Deposit Subscription Prediction System{% endblock %}</h1>
+                    <p>{% block page_subheader %}Enter customer features to predict their likelihood of subscribing to a term deposit.{% endblock %}</p>
+                </div>
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=ML+Lab&background=0284c7&color=fff" alt="User Profile">
+                </div>
+            </header>
+
+            {% block content %}{% endblock %}
+            
+            <footer class="main-footer">
+                <p><i class="fa-solid fa-code"></i> Developed using Python, Flask, Scikit-Learn and Random Forest Classification</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Local JS -->
+    {% block scripts %}{% endblock %}
+</body>
+</html>

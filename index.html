@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+
+{% block content %}
+            <div class="content-grid">
+                <!-- Left Column -->
+                <div class="left-column">
+                    <!-- Input Form Card -->
+                    <div class="card form-card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-user-pen"></i> Customer Profile</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="prediction-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="age"><i class="fa-solid fa-calendar-days"></i> Age</label>
+                                        <input type="number" id="age" name="age" required placeholder="e.g. 35" min="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="balance"><i class="fa-solid fa-wallet"></i> Account Balance (€)</label>
+                                        <input type="number" id="balance" name="balance" required placeholder="e.g. 1500">
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="job"><i class="fa-solid fa-briefcase"></i> Job</label>
+                                        <select id="job" name="job" required>
+                                            {% for val in options.get('job', []) %}
+                                            <option value="{{ val }}">{{ val|title }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="marital"><i class="fa-solid fa-ring"></i> Marital Status</label>
+                                        <select id="marital" name="marital" required>
+                                            {% for val in options.get('marital', []) %}
+                                            <option value="{{ val }}">{{ val|title }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="education"><i class="fa-solid fa-graduation-cap"></i> Education</label>
+                                        <select id="education" name="education" required>
+                                            {% for val in options.get('education', []) %}
+                                            <option value="{{ val }}">{{ val|title }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="default"><i class="fa-solid fa-credit-card"></i> Credit Default</label>
+                                        <select id="default" name="default" required>
+                                            {% for val in options.get('default', []) %}
+                                            <option value="{{ val }}">{{ val|title }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="housing"><i class="fa-solid fa-house-chimney"></i> Housing Loan</label>
+                                        <select id="housing" name="housing" required>
+                                            {% for val in options.get('housing', []) %}
+                                            <option value="{{ val }}">{{ val|title }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="loan"><i class="fa-solid fa-hand-holding-dollar"></i> Personal Loan</label>
+                                        <select id="loan" name="loan" required>
+                                            {% for val in options.get('loan', []) %}
+                                            <option value="{{ val }}">{{ val|title }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn-primary" id="predict-btn">
+                                        <span class="btn-text">Run Prediction</span>
+                                        <i class="fa-solid fa-bolt"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- History Table Card -->
+                    <div class="card history-card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-clock-rotate-left"></i> Session History (Last 5)</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="history-table" id="history-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Age</th>
+                                            <th>Balance</th>
+                                            <th>Job</th>
+                                            <th>Probability</th>
+                                            <th>Result</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="history-body">
+                                        <tr class="empty-row"><td colspan="5">No predictions made yet in this session.</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="right-column">
+                    <!-- Result Card -->
+                    <div class="card result-card">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-magnifying-glass-chart"></i> Analysis Output</h3>
+                        </div>
+                        <div class="card-body result-body">
+                            <!-- Loading State -->
+                            <div id="loading-state" class="hidden">
+                                <div class="spinner"></div>
+                                <p>Running Random Forest Model...</p>
+                            </div>
+                            
+                            <!-- Initial State -->
+                            <div id="initial-state">
+                                <div class="empty-icon"><i class="fa-solid fa-robot"></i></div>
+                                <p>Awaiting customer data to generate prediction.</p>
+                            </div>
+
+                            <!-- Error State -->
+                            <div id="error-state" class="hidden">
+                                <i class="fa-solid fa-circle-exclamation error-icon"></i>
+                                <p id="error-message">An error occurred.</p>
+                            </div>
+
+                            <!-- Success State -->
+                            <div id="success-state" class="hidden">
+                                <!-- Large Probability Gauge -->
+                                <div class="gauge-container">
+                                    <svg viewBox="0 0 36 36" class="circular-chart">
+                                        <path class="circle-bg"
+                                            d="M18 2.0845
+                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                            a 15.9155 15.9155 0 0 1 0 -31.831"
+                                        />
+                                        <path class="circle" id="gauge-path"
+                                            stroke-dasharray="0, 100"
+                                            d="M18 2.0845
+                                            a 15.9155 15.9155 0 0 1 0 31.831
+                                            a 15.9155 15.9155 0 0 1 0 -31.831"
+                                        />
+                                        <text x="18" y="20.8" class="percentage" id="prob-value">0%</text>
+                                    </svg>
+                                </div>
+
+                                <div style="display: flex; flex-direction: column; gap: 0.5rem; align-items: center; width: 100%; margin-bottom: 0.5rem;">
+                                    <div class="result-badge" id="result-badge">
+                                        <i class="fa-solid fa-check" id="result-icon"></i>
+                                        <span id="result-text">Likely to Subscribe</span>
+                                    </div>
+                                    <div style="font-size: 1.1rem; font-weight: 700; color: #1e293b; margin-top: 0.25rem;">
+                                        Subscription Probability: <span id="prob-text-val">0%</span>
+                                    </div>
+                                    <p style="font-size: 0.8rem; color: var(--text-muted); font-style: italic; margin-top: 0.1rem;">
+                                        Probability is generated using Random Forest predict_proba().
+                                    </p>
+                                </div>
+
+                                <div class="model-stats">
+                                    <div class="stat-item">
+                                        <span class="stat-label">Model Used</span>
+                                        <span class="stat-val" id="stat-model">Random Forest</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Model Accuracy</span>
+                                        <span class="stat-val" id="stat-acc">87.76%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% endblock %}

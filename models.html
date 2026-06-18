@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Models - Bank Term Deposit Subscription Prediction{% endblock %}
+
+{% block page_header %}Model Evaluation & Architecture{% endblock %}
+{% block page_subheader %}Compare algorithm performance and view feature importances for the deployed classifier.{% endblock %}
+
+{% block content %}
+<div class="models-container">
+    <div class="content-grid">
+        <!-- Models Table Card -->
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fa-solid fa-square-poll-vertical"></i> Algorithm Comparison</h3>
+            </div>
+            <div class="card-body" style="padding: 0;">
+                <div class="table-responsive">
+                    <table class="history-table" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Model Algorithm</th>
+                                <th>Testing Accuracy</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-weight: 500; color: #475569;">Naive Bayes</td>
+                                <td>86.91%</td>
+                                <td><span class="hist-badge" style="background: #e2e8f0; color: #475569;">Reference</span></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 500; color: #475569;">Decision Tree</td>
+                                <td>83.53%</td>
+                                <td><span class="hist-badge" style="background: #e2e8f0; color: #475569;">Reference</span></td>
+                            </tr>
+                            <tr style="background-color: rgba(2, 132, 199, 0.05); font-weight: 700;">
+                                <td style="color: var(--primary-color);"><i class="fa-solid fa-circle-check"></i> Random Forest</td>
+                                <td style="color: var(--primary-color);">87.76%</td>
+                                <td><span class="hist-badge hist-green" style="font-weight: 700; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);">Deployed</span></td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 500; color: #475569;">Multi-Layer Perceptron (ANN)</td>
+                                <td>88.30%</td>
+                                <td><span class="hist-badge" style="background: #e2e8f0; color: #475569;">Reference</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="padding: 2rem;">
+                    <h4 style="margin-bottom: 0.75rem; color: #1e293b;"><i class="fa-solid fa-circle-question"></i> Why Random Forest was selected</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;">
+                        Random Forest was selected as the deployment model because it provided strong predictive performance, stable results, fast inference time, and good generalization on unseen data. Although the ANN achieved slightly higher accuracy, Random Forest offers simpler deployment, lower computational requirements, and better interpretability, making it more suitable for this project.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature Importance Chart Card -->
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fa-solid fa-chart-bar"></i> Feature Importance (Random Forest)</h3>
+            </div>
+            <div class="card-body">
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">
+                    The relative influence of each input parameter in determining the term deposit subscription outcome.
+                </p>
+
+                <!-- Chart bars -->
+                <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                    {% for item in importances %}
+                    <div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem; color: #475569;">
+                            <span>{{ item.name }}</span>
+                            <span style="color: #1e293b; font-weight: 700;">{{ item.importance }}%</span>
+                        </div>
+                        <div style="width: 100%; background-color: #f1f5f9; height: 10px; border-radius: 5px; overflow: hidden; border: 1px solid #cbd5e1;">
+                            <div style="width: {{ item.importance }}%; background: linear-gradient(90deg, var(--primary-color) 0%, #38bdf8 100%); height: 100%; border-radius: 5px;"></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

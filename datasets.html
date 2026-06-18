@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}Dataset Overview - Bank Term Deposit Subscription Prediction{% endblock %}
+
+{% block page_header %}Dataset Overview{% endblock %}
+{% block page_subheader %}Explore the specifications, distribution, and structure of the ML training dataset.{% endblock %}
+
+{% block content %}
+<div class="datasets-container">
+    <!-- Key Statistics Grid -->
+    <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+        <div class="card" style="padding: 1.5rem; display: flex; align-items: center; gap: 1.5rem;">
+            <div style="background: rgba(2, 132, 199, 0.1); padding: 1rem; border-radius: 12px;">
+                <i class="fa-solid fa-database" style="font-size: 2rem; color: var(--primary-color); width: 32px; text-align: center;"></i>
+            </div>
+            <div>
+                <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Total Records</span>
+                <h2 style="font-size: 1.8rem; font-weight: 800; color: #0f172a; margin-top: 2px;">45,211</h2>
+            </div>
+        </div>
+
+        <div class="card" style="padding: 1.5rem; display: flex; align-items: center; gap: 1.5rem;">
+            <div style="background: rgba(2, 132, 199, 0.1); padding: 1rem; border-radius: 12px;">
+                <i class="fa-solid fa-list-ol" style="font-size: 2rem; color: var(--primary-color); width: 32px; text-align: center;"></i>
+            </div>
+            <div>
+                <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Features Used</span>
+                <h2 style="font-size: 1.8rem; font-weight: 800; color: #0f172a; margin-top: 2px;">8</h2>
+            </div>
+        </div>
+
+        <div class="card" style="padding: 1.5rem; display: flex; align-items: center; gap: 1.5rem;">
+            <div style="background: rgba(2, 132, 199, 0.1); padding: 1rem; border-radius: 12px;">
+                <i class="fa-solid fa-bullseye" style="font-size: 2rem; color: var(--primary-color); width: 32px; text-align: center;"></i>
+            </div>
+            <div>
+                <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Target Variable</span>
+                <h2 style="font-size: 1.8rem; font-weight: 800; color: #0f172a; margin-top: 2px;">y (Binary)</h2>
+            </div>
+        </div>
+
+        <div class="card" style="padding: 1.5rem; display: flex; align-items: center; gap: 1.5rem;">
+            <div style="background: rgba(16, 185, 129, 0.1); padding: 1rem; border-radius: 12px;">
+                <i class="fa-solid fa-percent" style="font-size: 2rem; color: var(--success-color); width: 32px; text-align: center;"></i>
+            </div>
+            <div>
+                <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Subscription Rate</span>
+                <h2 style="font-size: 1.8rem; font-weight: 800; color: #0f172a; margin-top: 2px;">11.70%</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <!-- Class Distribution Card -->
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fa-solid fa-chart-pie"></i> Target Class Distribution</h3>
+            </div>
+            <div class="card-body">
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                    The dataset exhibits class imbalance, which is typical for term deposit subscription campaigns.
+                </p>
+                
+                <!-- Class Distribution Bars -->
+                <div style="margin-bottom: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                        <span>Unsubscribed (y = No)</span>
+                        <span>39,922 records (88.30%)</span>
+                    </div>
+                    <div style="width: 100%; background-color: #e2e8f0; height: 16px; border-radius: 8px; overflow: hidden;">
+                        <div style="width: 88.3%; background-color: var(--error-color); height: 100%; border-radius: 8px;"></div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                        <span>Subscribed (y = Yes)</span>
+                        <span>5,289 records (11.70%)</span>
+                    </div>
+                    <div style="width: 100%; background-color: #e2e8f0; height: 16px; border-radius: 8px; overflow: hidden;">
+                        <div style="width: 11.7%; background-color: var(--success-color); height: 100%; border-radius: 8px;"></div>
+                    </div>
+                </div>
+
+                <div style="background-color: #f8fafc; border: 1px solid var(--border-color); padding: 1.25rem; border-radius: var(--input-radius); display: flex; gap: 12px; align-items: flex-start; margin-top: 2rem;">
+                    <i class="fa-solid fa-circle-info" style="color: var(--primary-color); font-size: 1.2rem; margin-top: 2px;"></i>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">
+                        <strong>Imbalance Note:</strong> The models have been trained and tested using stratified splits to maintain this target class ratio (88.3% vs. 11.7%) across both subsets.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Table Card -->
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fa-solid fa-table-list"></i> Feature Specifications</h3>
+            </div>
+            <div class="card-body" style="padding: 0;">
+                <div class="table-responsive">
+                    <table class="history-table" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-weight: 600; color: #1e293b;">Age</td>
+                                <td>Numeric</td>
+                                <td>Age of the client</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600; color: #1e293b;">Balance</td>
+                                <td>Numeric</td>
+                                <td>Average yearly balance (in EUR)</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600; color: #1e293b;">Job</td>
+                                <td>Categorical</td>
+                                <td>Job profile (12 categories)</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600; color: #1e293b;">Marital</td>
+                                <td>Categorical</td>
+                                <td>Marital status (single, married, divorced)</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600; color: #1e293b;">Education</td>
+                                <td>Categorical</td>
+                                <td>Education level (4 categories)</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600; color: #1e293b;">Default</td>
+                                <td>Categorical</td>
+                                <td>Has credit in default? (yes, no)</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600; color: #1e293b;">Housing</td>
+                                <td>Categorical</td>
+                                <td>Has a housing loan? (yes, no)</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600; color: #1e293b;">Loan</td>
+                                <td>Categorical</td>
+                                <td>Has a personal loan? (yes, no)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

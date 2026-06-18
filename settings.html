@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Settings & About - Bank Term Deposit Subscription Prediction{% endblock %}
+
+{% block page_header %}Settings & About{% endblock %}
+{% block page_subheader %}View project configuration, technology stack, system information, and developer metadata.{% endblock %}
+
+{% block content %}
+<div class="settings-container">
+    <div class="content-grid">
+        <!-- Project Description Card -->
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fa-solid fa-circle-info"></i> Project Information</h3>
+            </div>
+            <div class="card-body">
+                <h4 style="margin-bottom: 0.5rem; color: #1e293b;">Overview</h4>
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1.5rem; font-size: 0.9rem;">
+                    This system is designed to predict customer subscription behavior for bank term deposits using a trained Random Forest Classification model. By analyzing demographic variables (age, job, marital status, education) and financial variables (account balance, credit defaults, loans), the system enables financial institutions to optimize their outbound direct marketing campaigns, reduce operational costs, and maximize conversion rates.
+                </p>
+
+                <h4 style="margin-bottom: 0.75rem; color: #1e293b;">Technologies & Frameworks</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                    <div style="background-color: rgba(2, 132, 199, 0.1); color: var(--primary-color); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                        <i class="fa-brands fa-python"></i> Python
+                    </div>
+                    <div style="background-color: rgba(2, 132, 199, 0.1); color: var(--primary-color); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                        <i class="fa-solid fa-server"></i> Flask (Web Framework)
+                    </div>
+                    <div style="background-color: rgba(2, 132, 199, 0.1); color: var(--primary-color); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                        <i class="fa-solid fa-chart-simple"></i> Pandas (Data Analysis)
+                    </div>
+                    <div style="background-color: rgba(2, 132, 199, 0.1); color: var(--primary-color); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                        <i class="fa-solid fa-gears"></i> Scikit-Learn (ML Library)
+                    </div>
+                    <div style="background-color: rgba(2, 132, 199, 0.1); color: var(--primary-color); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                        <i class="fa-solid fa-box-archive"></i> Joblib (Model Persistence)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- System and Developer Info Card -->
+        <div class="left-column">
+            <!-- System Info -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fa-solid fa-laptop-code"></i> System Environment</h3>
+                </div>
+                <div class="card-body" style="padding: 0;">
+                    <div class="table-responsive">
+                        <table class="history-table" style="width: 100%;">
+                            <tbody>
+                                <tr>
+                                    <td style="font-weight: 600; color: #475569; width: 45%;">Operating System</td>
+                                    <td>{{ sys_info.os }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 600; color: #475569;">Python Version</td>
+                                    <td>{{ sys_info.python_version }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 600; color: #475569;">Scikit-Learn Version</td>
+                                    <td>{{ sys_info.scikit_learn_version }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: 600; color: #475569;">Flask Version</td>
+                                    <td>{{ sys_info.flask_version }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Developer Info -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fa-solid fa-id-card"></i> Developer Metadata</h3>
+                </div>
+                <div class="card-body">
+                    <ul style="list-style: none; font-size: 0.9rem; color: var(--text-main); line-height: 1.8;">
+                        <li><span style="font-weight: 600; color: #475569;">Program:</span> BS Artificial Intelligence</li>
+                        <li><span style="font-weight: 600; color: #475569;">Project:</span> ML Lab Project</li>
+                        <li><span style="font-weight: 600; color: #475569;">Scope:</span> Term Deposit Subscription Prediction</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Team Members Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fa-solid fa-users"></i> Team Members</h3>
+                </div>
+                <div class="card-body" style="display: flex; flex-direction: column; gap: 1.25rem;">
+                    <!-- Member 1 -->
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background-color: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.95rem; box-shadow: 0 4px 8px rgba(2, 132, 199, 0.25);">
+                            ZR
+                        </div>
+                        <div>
+                            <h4 style="color: #1e293b; font-weight: 700; margin: 0;">Zaigham Rouf</h4>
+                            <p style="color: var(--text-muted); font-size: 0.8rem; margin: 1px 0 0 0;">BS Artificial Intelligence</p>
+                        </div>
+                    </div>
+                    <!-- Member 2 -->
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 40px; height: 40px; border-radius: 50%; background-color: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.95rem; box-shadow: 0 4px 8px rgba(2, 132, 199, 0.25);">
+                            FM
+                        </div>
+                        <div>
+                            <h4 style="color: #1e293b; font-weight: 700; margin: 0;">Fahad Mumtaz</h4>
+                            <p style="color: var(--text-muted); font-size: 0.8rem; margin: 1px 0 0 0;">BS Artificial Intelligence</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
